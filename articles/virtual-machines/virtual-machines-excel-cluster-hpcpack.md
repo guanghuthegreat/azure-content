@@ -151,14 +151,11 @@ The HPC Pack IaaS deployment script provides another versatile way to deploy an 
 
 * Make sure you specify **EnableWebPortal** so that the head node certificate is generated and exported.
 
-* The post-configuration PowerShell script PostConfig.ps1 configures certain settings on the head node such as setting up the Azure storage connection string, removing the compute node role from the head node, and bringing all nodes online when they are deployed. A sample script follows.
+* The post-configuration PowerShell script PostConfig.ps1 configures certain settings on the head node such as removing the compute node role from the head node, and bringing all nodes online when they are deployed. A sample script follows.
 
 ```
     # add the HPC Pack powershell cmdlets
         Add-PSSnapin Microsoft.HPC
-
-    # set the Azure storage connection string for the cluster
-        Set-HpcClusterProperty -AzureStorageConnectionString 'DefaultEndpointsProtocol=https;AccountName=<yourstorageaccountname>;AccountKey=<yourstorageaccountkey>'
 
     # remove the compute node role for head node to make sure the Excel workbook won’t run on head node
         Get-HpcNode -GroupName HeadNodes | Set-HpcNodeState -State offline | Set-HpcNode -Role BrokerNode
